@@ -45,11 +45,14 @@ public class Contact {
     public void setNumber(String number) {
         if (isNumberValid(number)) {
             this.number = number;
+        } else {
+            this.number = null;
+            System.out.println("Wrong number format!");
         }
     }
 
     public static boolean isNumberValid(String input) {
-        Pattern pattern = Pattern.compile("^\\+?(\\(\\w{1}\\)|\\w{1}+[\\s-]\\(\\w{2,}\\))([\\s-]\\w{2,})*");
+        Pattern pattern = Pattern.compile("^\\+?(\\(\\w+\\)|\\w+[\\s-]\\(\\w{2,}\\)|\\w+)([\\s-]\\w{2,})*");
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }
