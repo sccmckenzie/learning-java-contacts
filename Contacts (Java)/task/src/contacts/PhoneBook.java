@@ -11,6 +11,11 @@ public class PhoneBook {
 
     public void addContact(Contact contact) {
         contacts.add(contact);
+        System.out.println("The record added.");
+    }
+
+    public void count() {
+        System.out.println("The Phone Book has " + contacts.size() + " records.");
     }
 
 }
