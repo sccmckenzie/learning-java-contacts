@@ -1,5 +1,8 @@
 package contacts;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Contact {
     private String name;
     private String surname;
@@ -8,7 +11,12 @@ public class Contact {
     public Contact(String name, String surname, String number) {
         this.name = name;
         this.surname = surname;
-        this.number = number;
+
+        if (isNumberValid(number)) {
+            this.number = number;
+        } else {
+            System.out.println("Wrong number format!");
+        }
     }
 
     public String getName() {
@@ -28,10 +36,21 @@ public class Contact {
     }
 
     public String getNumber() {
+        if (number == null) {
+            return "[no number]";
+        }
         return number;
     }
 
     public void setNumber(String number) {
-        this.number = number;
+        if (isNumberValid(number)) {
+            this.number = number;
+        }
+    }
+
+    public static boolean isNumberValid(String input) {
+        Pattern pattern = Pattern.compile("^\\+?(\\(\\w{1}\\)|\\w{1}+[\\s-]\\(\\w{2,}\\))([\\s-]\\w{2,})*");
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
     }
 }

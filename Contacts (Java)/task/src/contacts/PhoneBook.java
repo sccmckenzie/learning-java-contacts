@@ -55,7 +55,7 @@ public class PhoneBook {
         } else if (field.equals("number")) {
             System.out.print("Enter number: ");
             String number = scanner.nextLine();
-            contact.setSurname(number);
+            contact.setNumber(number);
         } else {
             throw new IllegalArgumentException();
         }
