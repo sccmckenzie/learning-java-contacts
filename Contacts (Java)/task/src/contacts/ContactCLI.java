@@ -34,4 +34,26 @@ public abstract class ContactCLI {
 
         return builder;
     }
+
+    public static ContactOrgBuilder getContactOrgBuilderFromCLI() {
+        ContactOrgBuilder builder = new ContactOrgBuilder();
+
+        // Get organization name from CLI
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the organization name: ");
+        String name = scanner.nextLine();
+        builder.setOrgName(name);
+
+        // Get address from CLI
+        System.out.print("Enter the address: ");
+        String address = scanner.nextLine();
+        builder.setAddress(address);
+
+        // Get number from CLI
+        System.out.print("Enter the number: ");
+        String birthdate = scanner.nextLine();
+        builder.setNumber(birthdate);
+
+        return builder;
+    }
 }

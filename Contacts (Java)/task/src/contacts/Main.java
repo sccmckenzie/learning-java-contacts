@@ -16,9 +16,24 @@ public class Main {
 
                 switch (option) {
                     case ADD:
-                        ContactPersonBuilder builder = ContactCLI.getContactPersonBuilderFromCLI();
-                        Contact contact = builder.getResult();
-                        phoneBook.addContact(contact);
+                        System.out.print("Enter the type (person, organization): ");
+                        try {
+                            ContactType contactType = ContactType.valueOf(scanner.nextLine().toUpperCase());
+                            switch (contactType) {
+                                case PERSON -> {
+                                    ContactPersonBuilder builder = ContactCLI.getContactPersonBuilderFromCLI();
+                                    Contact contact = builder.getResult();
+                                    phoneBook.addContact(contact);
+                                }
+                                case ORGANIZATION -> {
+                                    ContactOrgBuilder builder = ContactCLI.getContactOrgBuilderFromCLI();
+                                    Contact contact = builder.getResult();
+                                    phoneBook.addContact(contact);
+                                }
+                            }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Wrong type!");
+                        }
                         break;
                     case COUNT:
                         phoneBook.printCount();
@@ -59,6 +74,7 @@ public class Main {
                         System.out.println(option + " not yet implemented.");
                         break;
                 }
+            System.out.println();
             } catch (IllegalArgumentException e) {
                 System.out.println("Wrong Action!");
             }

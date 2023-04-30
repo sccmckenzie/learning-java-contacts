@@ -43,12 +43,11 @@ public class PhoneBook {
 
     public void editContact(int i) {
         Contact contact = contacts.get(i - 1);
-        System.out.print("Select a field (name, surname, birth, gender, number): ");
-        Scanner scanner = new Scanner(System.in);
-        String field = scanner.nextLine();
         if (contact instanceof ContactPerson contactPerson) {
+            System.out.print("Select a field (name, surname, birth, gender, number): ");
+            Scanner scanner = new Scanner(System.in);
+            String field = scanner.nextLine();
             switch (field) {
-                // TODO: needs to include additional fields and "BAD" warnings
                 case "name" -> {
                     System.out.print("Enter name: ");
                     String name = scanner.nextLine();
@@ -86,6 +85,28 @@ public class PhoneBook {
                         contactPerson.setNumber(number);
                     } else {
                         contactPerson.setNumber(null);
+                        System.out.println("Wrong number format!");
+                    }
+                }
+                default -> throw new IllegalArgumentException();
+            }
+        } else if (contact instanceof ContactOrg contactOrg) {
+            System.out.print("Select a field (address, number): ");
+            Scanner scanner = new Scanner(System.in);
+            String field = scanner.nextLine();
+            switch (field) {
+                case "address" -> {
+                    System.out.print("Enter address: ");
+                    String address = scanner.nextLine();
+                    contactOrg.setAddress(address);
+                }
+                case "number" -> {
+                    System.out.print("Enter number: ");
+                    String number = scanner.nextLine();
+                    if (Contact.isNumberValid(number)) {
+                        contactOrg.setNumber(number);
+                    } else {
+                        contactOrg.setNumber(null);
                         System.out.println("Wrong number format!");
                     }
                 }
