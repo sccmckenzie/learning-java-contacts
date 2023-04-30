@@ -1,7 +1,6 @@
 package contacts;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class ContactPerson extends Contact {
     private String name;
