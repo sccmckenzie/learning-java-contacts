@@ -27,12 +27,7 @@ public abstract class Contact {
     }
 
     public void setNumber(String number) {
-        if (isNumberValid(number)) {
-            this.number = number;
-        } else {
-            this.number = null;
-            System.out.println("Wrong number format!");
-        }
+        this.number = number;
     }
 
     public static boolean isNumberValid(String input) {

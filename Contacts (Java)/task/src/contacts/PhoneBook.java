@@ -1,5 +1,7 @@
 package contacts;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,11 +43,12 @@ public class PhoneBook {
 
     public void editContact(int i) {
         Contact contact = contacts.get(i - 1);
-        System.out.print("Select a field (name, surname, number): ");
+        System.out.print("Select a field (name, surname, birth, gender, number): ");
         Scanner scanner = new Scanner(System.in);
         String field = scanner.nextLine();
         if (contact instanceof ContactPerson contactPerson) {
             switch (field) {
+                // TODO: needs to include additional fields and "BAD" warnings
                 case "name" -> {
                     System.out.print("Enter name: ");
                     String name = scanner.nextLine();
@@ -56,10 +59,35 @@ public class PhoneBook {
                     String surname = scanner.nextLine();
                     contactPerson.setSurname(surname);
                 }
+                case "birth" -> {
+                    System.out.print("Enter number: ");
+                    String birthdate = scanner.nextLine();
+                    try {
+                        contactPerson.setBirthdate(LocalDate.parse(birthdate));
+                    } catch (DateTimeParseException e) {
+                        contactPerson.setBirthdate(null);
+                        System.out.println("Bad birth date!");
+                    }
+                }
+                case "gender" -> {
+                    System.out.print("Enter number: ");
+                    String gender = scanner.nextLine();
+                    try {
+                        contactPerson.setGender(Gender.valueOf(gender.toUpperCase()));
+                    } catch (IllegalArgumentException e) {
+                        contactPerson.setGender(null);
+                        System.out.println("Bad gender!");
+                    }
+                }
                 case "number" -> {
                     System.out.print("Enter number: ");
                     String number = scanner.nextLine();
-                    contactPerson.setNumber(number);
+                    if (Contact.isNumberValid(number)) {
+                        contactPerson.setNumber(number);
+                    } else {
+                        contactPerson.setNumber(null);
+                        System.out.println("Wrong number format!");
+                    }
                 }
                 default -> throw new IllegalArgumentException();
             }

@@ -6,16 +6,15 @@ import java.time.format.DateTimeParseException;
 public class ContactPerson extends Contact {
     private String name;
     private String surname;
-    private LocalDate birthDate;
-
+    private LocalDate birthdate;
     private Gender gender;
 
-    public ContactPerson(String name, String surname, String birthDate, String gender, String number) {
+    public ContactPerson(String name, String surname, LocalDate birthdate, Gender gender, String number) {
         super(number);
         this.name = name;
         this.surname = surname;
-        setBirthDate(birthDate);
-        setGender(gender);
+        this.birthdate = birthdate;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -34,21 +33,16 @@ public class ContactPerson extends Contact {
         this.surname = surname;
     }
 
-    public String getBirthDate() {
-        if (this.birthDate == null) {
+    public String getBirthdate() {
+        if (this.birthdate == null) {
             return "[no data]";
         } else {
-            return this.birthDate.toString();
+            return this.birthdate.toString();
         }
     }
 
-    public void setBirthDate(String birthDate) {
-        try {
-            this.birthDate = LocalDate.parse(birthDate);
-        } catch (DateTimeParseException e) {
-            this.birthDate = null;
-            System.out.println("Bad birth date!");
-        }
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getGender() {
@@ -59,13 +53,8 @@ public class ContactPerson extends Contact {
         }
     }
 
-    public void setGender(String gender) {
-        try {
-            this.gender = Gender.valueOf(gender.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            this.gender = null;
-            System.out.println("Bad gender!");
-        }
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getShortDescription() {
@@ -76,7 +65,7 @@ public class ContactPerson extends Contact {
     public void printLongDescription() {
         System.out.println("Name: " + getName());
         System.out.println("Surname: " + getSurname());
-        System.out.println("Birth date: " + getBirthDate());
+        System.out.println("Birth date: " + getBirthdate());
         System.out.println("Gender: " + getGender());
         super.printLongDescription();
     }

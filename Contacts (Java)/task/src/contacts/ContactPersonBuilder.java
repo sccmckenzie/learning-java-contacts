@@ -1,11 +1,13 @@
 package contacts;
 
-public class ContactPersonBuilder implements Builder {
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
+public class ContactPersonBuilder extends Builder {
     private String name;
     private String surname;
-    private String birthDate;
-    private String gender;
-    private String number;
+    private LocalDate birthdate;
+    private Gender gender;
 
     public void setName(String name) {
         this.name = name;
@@ -15,20 +17,26 @@ public class ContactPersonBuilder implements Builder {
         this.surname = surname;
     }
 
-    public void setBirthdate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthdate(String birthdate) {
+        try {
+            this.birthdate = LocalDate.parse(birthdate);
+        } catch (DateTimeParseException e) {
+            this.birthdate = null;
+            System.out.println("Bad birth date!");
+        }
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        try {
+            this.gender = Gender.valueOf(gender.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            this.gender = null;
+            System.out.println("Bad gender!");
+        }
     }
 
-    @Override
-    public void setNumber(String number) {
-        this.number = number;
-    }
 
     public Contact getResult() {
-        return new ContactPerson(name, surname, birthDate, gender, number);
+        return new ContactPerson(name, surname, birthdate, gender, number);
     }
 }
