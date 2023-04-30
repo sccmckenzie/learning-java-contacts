@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PhoneBook {
-    private ArrayList<Contact> contacts = new ArrayList<>();
+    private final ArrayList<Contact> contacts = new ArrayList<>();
 
     public PhoneBook() {
 
@@ -26,12 +26,12 @@ public class PhoneBook {
     public void listContacts() {
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
-
-            System.out.println((i + 1) + ". " +
-                    contact.getName() + " " +
-                    contact.getSurname() + ", " +
-                    contact.getNumber());
+            System.out.println((i + 1) + ". " + contact.getShortDescription());
         }
+    }
+
+    public void printContactDescription(int i) {
+        contacts.get(i - 1).printLongDescription();
     }
 
     public void removeContact(int i) {
@@ -44,21 +44,27 @@ public class PhoneBook {
         System.out.print("Select a field (name, surname, number): ");
         Scanner scanner = new Scanner(System.in);
         String field = scanner.nextLine();
-        if (field.equals("name")) {
-            System.out.print("Enter name: ");
-            String name = scanner.nextLine();
-            contact.setName(name);
-        } else if (field.equals("surname")) {
-            System.out.print("Enter surname: ");
-            String surname = scanner.nextLine();
-            contact.setSurname(surname);
-        } else if (field.equals("number")) {
-            System.out.print("Enter number: ");
-            String number = scanner.nextLine();
-            contact.setNumber(number);
-        } else {
-            throw new IllegalArgumentException();
+        if (contact instanceof ContactPerson contactPerson) {
+            switch (field) {
+                case "name" -> {
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    contactPerson.setName(name);
+                }
+                case "surname" -> {
+                    System.out.print("Enter surname: ");
+                    String surname = scanner.nextLine();
+                    contactPerson.setSurname(surname);
+                }
+                case "number" -> {
+                    System.out.print("Enter number: ");
+                    String number = scanner.nextLine();
+                    contactPerson.setNumber(number);
+                }
+                default -> throw new IllegalArgumentException();
+            }
         }
+        contact.setUpdateTime();
         System.out.println("The record updated!");
     }
 

@@ -5,6 +5,6 @@ public enum PhoneBookOption {
     REMOVE,
     EDIT,
     COUNT,
-    LIST,
-    EXIT;
+    INFO,
+    EXIT
 }

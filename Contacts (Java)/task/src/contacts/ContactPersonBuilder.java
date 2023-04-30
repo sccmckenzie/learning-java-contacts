@@ -1,18 +1,26 @@
 package contacts;
 
-public class ContactBuilder implements Builder {
+public class ContactPersonBuilder implements Builder {
     private String name;
     private String surname;
+    private String birthDate;
+    private String gender;
     private String number;
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public void setBirthdate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override
@@ -21,6 +29,6 @@ public class ContactBuilder implements Builder {
     }
 
     public Contact getResult() {
-        return new Contact(name, surname, number);
+        return new ContactPerson(name, surname, birthDate, gender, number);
     }
 }

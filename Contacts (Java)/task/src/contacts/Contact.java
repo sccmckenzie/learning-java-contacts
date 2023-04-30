@@ -1,38 +1,22 @@
 package contacts;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Contact {
-    private String name;
-    private String surname;
+public abstract class Contact {
     private String number;
+    private final LocalDateTime creationTime;
+    private LocalDateTime updateTime;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public Contact(String name, String surname, String number) {
-        this.name = name;
-        this.surname = surname;
 
-        if (isNumberValid(number)) {
-            this.number = number;
-        } else {
-            System.out.println("Wrong number format!");
-        }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public Contact(String number) {
+        setNumber(number);
+        LocalDateTime currentTime = LocalDateTime.now();
+        this.creationTime = currentTime;
+        this.updateTime = currentTime;
     }
 
     public String getNumber() {
@@ -55,5 +39,26 @@ public class Contact {
         Pattern pattern = Pattern.compile("^\\+?(\\(\\w+\\)|\\w+[\\s-]\\(\\w{2,}\\)|\\w+)([\\s-]\\w{2,})*");
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
+    }
+
+
+    public String getCreationTime() {
+        return creationTime.format(formatter);
+    }
+
+    public String getUpdateTime() {
+        return updateTime.format(formatter);
+    }
+
+    public void setUpdateTime() {
+        this.updateTime = LocalDateTime.now();
+    }
+
+    public abstract String getShortDescription();
+
+    public void printLongDescription() {
+        System.out.println("Number: " + getNumber());
+        System.out.println("Time created: " + getCreationTime());
+        System.out.println("Time last edit: " + getUpdateTime());
     }
 }

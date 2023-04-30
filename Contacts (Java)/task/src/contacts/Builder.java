@@ -1,7 +1,6 @@
 package contacts;
 
 public interface Builder {
-    void setName(String name);
-    void setSurname(String surname);
+    Contact getResult();
     void setNumber(String number);
 }

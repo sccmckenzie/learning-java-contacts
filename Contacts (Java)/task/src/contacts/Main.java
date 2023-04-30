@@ -10,24 +10,27 @@ public class Main {
         PhoneBookOption option = null;
 
         while (option != PhoneBookOption.EXIT) {
-            System.out.print("Enter action (add, remove, edit, count, list, exit): ");
+            System.out.print("Enter action (add, remove, edit, count, info, exit): ");
             try {
                 option = PhoneBookOption.valueOf(scanner.nextLine().toUpperCase());
 
                 switch (option) {
                     case ADD:
-                        ContactBuilder builder = ContactCLI.getContactBuilderFromCLI();
+                        ContactPersonBuilder builder = ContactCLI.getContactPersonBuilderFromCLI();
                         Contact contact = builder.getResult();
                         phoneBook.addContact(contact);
                         break;
                     case COUNT:
                         phoneBook.printCount();
                         break;
-                    case LIST:
+                    case INFO:
                         if (phoneBook.getCount() == 0) {
                             System.out.println("No records to list!");
                         } else {
                             phoneBook.listContacts();
+                            System.out.print("Enter index to show info: ");
+                            int record = Integer.parseInt(scanner.nextLine());
+                            phoneBook.printContactDescription(record);
                         }
                         break;
                     case REMOVE:
@@ -36,7 +39,7 @@ public class Main {
                         } else {
                             phoneBook.listContacts();
                             System.out.print("Select a record: ");
-                            int record = Integer.valueOf(scanner.nextLine());
+                            int record = Integer.parseInt(scanner.nextLine());
                             phoneBook.removeContact(record);
                         }
                         break;
@@ -46,14 +49,14 @@ public class Main {
                         } else {
                             phoneBook.listContacts();
                             System.out.print("Select a record: ");
-                            int record = Integer.valueOf(scanner.nextLine());
+                            int record = Integer.parseInt(scanner.nextLine());
                             phoneBook.editContact(record);
                         }
                         break;
                     case EXIT:
                         break;
                     default:
-                        System.out.println(option.toString() + " not yet implemented.");
+                        System.out.println(option + " not yet implemented.");
                         break;
                 }
             } catch (IllegalArgumentException e) {
@@ -61,9 +64,5 @@ public class Main {
             }
 
         }
-
-
-
-
     }
 }
